@@ -4,21 +4,13 @@ import './App.css';
 import HomeScreen from './components/HomeScreen';
 import ClientList from './components/ClientList';
 import ClientForm from './components/ClientForm';
-
-const mockClients = Array.from({ length: 25 }, (_, i) => ({
-  client_code: `C${100 + i}`,
-  client_name: `Client Name ${i + 1}`,
-  client_address: `Address ${i + 1}`,
-  client_office_phone: `123-456-789${i}`,
-  client_pic_name: `PIC ${i + 1}`,
-  client_mobile_phone: `987-654-321${i}`,
-}));
+import clientsData from './data/clients.json';
 
 function App() {
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
-    setClients(mockClients);
+    setClients(clientsData);
   }, []);
 
   const handleSaveClient = (clientData) => {
