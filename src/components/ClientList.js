@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './ClientList.css';
 
-const ClientList = ({ clients }) => {
+const ClientList = ({ clients, onDelete }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const clientsPerPage = 10;
 
@@ -15,6 +15,12 @@ const ClientList = ({ clients }) => {
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const handleDelete = (clientCode) => {
+    if (window.confirm('Are you sure you want to delete this client?')) {
+      onDelete(clientCode);
+    }
   };
 
   return (
@@ -52,6 +58,9 @@ const ClientList = ({ clients }) => {
                 <Link to={`/client-form/${client.client_code}`} className="action-button">
                   Edit
                 </Link>
+                <button onClick={() => handleDelete(client.client_code)} className="action-button delete-button">
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

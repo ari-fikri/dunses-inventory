@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './ProductList.css';
 
-const ProductList = ({ products }) => {
+const ProductList = ({ products, onDelete }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 10;
 
@@ -15,6 +15,12 @@ const ProductList = ({ products }) => {
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const handleDelete = (productCode) => {
+    if (window.confirm('Are you sure you want to delete this product?')) {
+      onDelete(productCode);
+    }
   };
 
   return (
@@ -48,6 +54,9 @@ const ProductList = ({ products }) => {
                 <Link to={`/product-form/${product.product_code}`} className="action-button">
                   Edit
                 </Link>
+                <button onClick={() => handleDelete(product.product_code)} className="action-button delete-button">
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

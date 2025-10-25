@@ -39,6 +39,11 @@
   text-decoration: none;
 }
 
+.action-button.delete-button {
+  background-color: #dc3545;
+  margin-left: 5px;
+}
+
 .pagination {
   margin-top: 20px;
 }
