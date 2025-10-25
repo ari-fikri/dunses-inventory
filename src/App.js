@@ -21,16 +21,33 @@ function App() {
     setProducts(sortedProducts);
   }, []);
 
-  const handleSaveClient = (clientToSave) => {
+  const handleSaveClient = (clientToSave, originalClientCode = null) => {
     const now = new Date().toISOString();
-    const existingClientIndex = clients.findIndex(c => c.client_code === clientToSave.client_code);
 
-    if (existingClientIndex > -1) {
-      const updatedClients = [...clients];
-      updatedClients[existingClientIndex] = { ...clientToSave, updated_at: now };
-      setClients(updatedClients);
+    if (originalClientCode) {
+      // Editing an existing client
+      const existingClientIndex = clients.findIndex(c => c.client_code === originalClientCode);
+      if (existingClientIndex > -1) {
+        // Check if the new client code is already taken by another client
+        if (clientToSave.client_code !== originalClientCode && clients.some(c => c.client_code === clientToSave.client_code)) {
+          alert('Client code already exists. Please choose a different one.');
+          return;
+        }
+        const updatedClients = [...clients];
+        updatedClients[existingClientIndex] = { ...clients[existingClientIndex], ...clientToSave, updated_at: now };
+        setClients(updatedClients);
+      }
     } else {
-      const newClient = { ...clientToSave, created_at: now, updated_at: now };
+      // Adding a new client
+      if (clients.some(c => c.client_code === clientToSave.client_code)) {
+        alert('Client code already exists. Please choose a different one.');
+        return;
+      }
+      const newClient = {
+        ...clientToSave,
+        created_at: now,
+        updated_at: now,
+      };
       setClients([newClient, ...clients]);
     }
   };
@@ -69,7 +86,7 @@ function App() {
         <Route path="/" element={<HomeScreen />} />
         <Route path="/clients" element={<ClientList clients={clients} onDelete={handleDeleteClient} />} />
         <Route path="/client-form" element={<ClientForm onSave={handleSaveClient} clients={clients} />} />
-        <Route path="/client-form/:clientId" element={<ClientForm onSave={handleSaveClient} clients={clients} />} />
+        <Route path="/client-form/:clientCode" element={<ClientForm onSave={handleSaveClient} clients={clients} />} />
         <Route path="/products" element={<ProductList products={products} onDelete={handleDeleteProduct} />} />
         <Route path="/product-form" element={<ProductForm onSave={handleSaveProduct} products={products} />} />
         <Route path="/product-form/:productCode" element={<ProductForm onSave={handleSaveProduct} products={products} />} />

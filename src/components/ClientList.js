@@ -50,6 +50,7 @@ const ClientList = ({ clients, onDelete }) => {
       <table className="client-table">
         <thead>
           <tr>
+            <th>Rec No</th>
             <th>Code</th>
             <th>Name</th>
             <th>Address</th>
@@ -62,8 +63,9 @@ const ClientList = ({ clients, onDelete }) => {
           </tr>
         </thead>
         <tbody>
-          {currentClients.map((client) => (
+          {currentClients.map((client, index) => (
             <tr key={client.client_code}>
+              <td>{indexOfFirstClient + index + 1}</td>
               <td>{client.client_code}</td>
               <td>{client.client_name}</td>
               <td>{client.client_address}</td>

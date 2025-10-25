@@ -67,25 +67,31 @@
   background-color: #f1f3f5;
 }
 
-.action-button {
-  padding: 0.375rem 0.75rem;
-  font-size: 0.875rem;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 0.2rem;
+.product-table .action-button {
+  display: inline-block;
+  padding: 8px 12px;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #007bff; /* Blue background for edit */
+  transition: background-color 0.3s ease;
+  margin-right: 5px;
+  text-align: center;
+  line-height: 1.5;
 }
 
-.action-button:not(:last-child) {
-    margin-right: 5px;
+.product-table .action-button:hover {
+  background-color: #0056b3;
 }
 
-.action-button.delete-button {
-  background-color: #dc3545;
+.product-table .delete-button {
+  background-color: #dc3545; /* Red background for delete */
 }
 
-.action-button.delete-button:hover {
+.product-table .delete-button:hover {
   background-color: #c82333;
 }
 
