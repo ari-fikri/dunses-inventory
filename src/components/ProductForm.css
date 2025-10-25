@@ -28,3 +28,35 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+.materials-section {
+  margin-top: 20px;
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+}
+
+.materials-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.materials-table th,
+.materials-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.add-material-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.add-material-form select,
+.add-material-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

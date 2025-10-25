@@ -1,137 +1,94 @@
 [
   {
     "product_code": "P001",
-    "product_name": "Laptop Model X",
-    "product_price": 1500.00,
-    "current_stock": 30.00,
+    "product_name": "Sample Prod 1",
+    "product_price": 10.00,
+    "current_stock": 100.00,
     "product_category": "FG",
     "created_at": "2023-01-15T09:30:00Z",
-    "updated_at": "2023-01-15T09:30:00Z"
+    "updated_at": "2023-01-15T09:30:00Z",
+    "materials": [
+      {
+        "material_code": "P005",
+        "material_qty": 2
+      },
+      {
+        "material_code": "P006",
+        "material_qty": 1
+      },
+      {
+        "material_code": "P007",
+        "material_qty": 4
+      }
+    ]
   },
   {
     "product_code": "P002",
-    "product_name": "Wireless Mouse",
-    "product_price": 25.50,
-    "current_stock": 150.00,
+    "product_name": "Sample Prod 2",
+    "product_price": 20.00,
+    "current_stock": 200.00,
     "product_category": "FG",
     "created_at": "2023-01-20T14:00:00Z",
-    "updated_at": "2023-01-20T14:00:00Z"
+    "updated_at": "2023-01-20T14:00:00Z",
+    "materials": [
+      {
+        "material_code": "P005",
+        "material_qty": 1
+      },
+      {
+        "material_code": "P006",
+        "material_qty": 4
+      }
+    ]
   },
   {
     "product_code": "P003",
-    "product_name": "Mechanical Keyboard",
-    "product_price": 80.00,
-    "current_stock": 75.00,
-    "product_category": "FG",
+    "product_name": "Sample Prod 3",
+    "product_price": 30.00,
+    "current_stock": 300.00,
+    "product_category": "RM",
     "created_at": "2023-02-10T11:00:00Z",
-    "updated_at": "2023-02-10T11:00:00Z"
+    "updated_at": "2023-02-10T11:00:00Z",
+    "materials": []
   },
   {
     "product_code": "P004",
-    "product_name": "27-inch 4K Monitor",
-    "product_price": 450.00,
-    "current_stock": 40.00,
-    "product_category": "FG",
+    "product_name": "Sample Prod 4",
+    "product_price": 40.00,
+    "current_stock": 400.00,
+    "product_category": "RM",
     "created_at": "2023-02-25T16:20:00Z",
-    "updated_at": "2023-02-25T16:20:00Z"
+    "updated_at": "2023-02-25T16:20:00Z",
+    "materials": []
   },
   {
     "product_code": "P005",
-    "product_name": "USB-C Hub",
-    "product_price": 45.75,
-    "current_stock": 200.00,
-    "product_category": "FG",
+    "product_name": "Sample Prod 5",
+    "product_price": 50.00,
+    "current_stock": 500.00,
+    "product_category": "RM",
     "created_at": "2023-03-05T10:00:00Z",
-    "updated_at": "2023-03-05T10:00:00Z"
+    "updated_at": "2023-03-05T10:00:00Z",
+    "materials": []
   },
   {
     "product_code": "P006",
-    "product_name": "Webcam HD 1080p",
+    "product_name": "Sample Prod 6",
     "product_price": 60.00,
-    "current_stock": 90.00,
-    "product_category": "FG",
+    "current_stock": 600.00,
+    "product_category": "RM",
     "created_at": "2023-03-18T09:00:00Z",
-    "updated_at": "2023-03-18T09:00:00Z"
+    "updated_at": "2023-03-18T09:00:00Z",
+    "materials": []
   },
   {
     "product_code": "P007",
-    "product_name": "Noise-Cancelling Headphones",
-    "product_price": 250.00,
-    "current_stock": 60.00,
-    "product_category": "FG",
+    "product_name": "Sample Prod 7",
+    "product_price": 70.00,
+    "current_stock": 700.00,
+    "product_category": "RM",
     "created_at": "2023-04-01T13:45:00Z",
-    "updated_at": "2023-04-01T13:45:00Z"
-  },
-  {
-    "product_code": "P008",
-    "product_name": "Ergonomic Office Chair",
-    "product_price": 350.00,
-    "current_stock": 25.00,
-    "product_category": "FG",
-    "created_at": "2023-04-12T15:00:00Z",
-    "updated_at": "2023-04-12T15:00:00Z"
-  },
-  {
-    "product_code": "P009",
-    "product_name": "Standing Desk",
-    "product_price": 500.00,
-    "current_stock": 20.00,
-    "product_category": "FG",
-    "created_at": "2023-05-02T11:30:00Z",
-    "updated_at": "2023-05-02T11:30:00Z"
-  },
-  {
-    "product_code": "P010",
-    "product_name": "Docking Station",
-    "product_price": 120.00,
-    "current_stock": 50.00,
-    "product_category": "FG",
-    "created_at": "2023-05-20T10:10:00Z",
-    "updated_at": "2023-05-20T10:10:00Z"
-  },
-  {
-    "product_code": "P011",
-    "product_name": "Portable SSD 1TB",
-    "product_price": 100.00,
-    "current_stock": 80.00,
-    "product_category": "FG",
-    "created_at": "2023-06-10T14:00:00Z",
-    "updated_at": "2023-06-10T14:00:00Z"
-  },
-  {
-    "product_code": "P012",
-    "product_name": "Gaming Mouse Pad",
-    "product_price": 20.00,
-    "current_stock": 300.00,
-    "product_category": "FG",
-    "created_at": "2023-06-25T17:00:00Z",
-    "updated_at": "2023-06-25T17:00:00Z"
-  },
-  {
-    "product_code": "P013",
-    "product_name": "4-Port USB Charger",
-    "product_price": 30.00,
-    "current_stock": 120.00,
-    "product_category": "FG",
-    "created_at": "2023-07-08T09:00:00Z",
-    "updated_at": "2023-07-08T09:00:00Z"
-  },
-  {
-    "product_code": "P014",
-    "product_name": "Laptop Stand",
-    "product_price": 35.00,
-    "current_stock": 100.00,
-    "product_category": "FG",
-    "created_at": "2023-07-22T12:30:00Z",
-    "updated_at": "2023-07-22T12:30:00Z"
-  },
-  {
-    "product_code": "P015",
-    "product_name": "External Hard Drive 2TB",
-    "product_price": 85.00,
-    "current_stock": 70.00,
-    "product_category": "FG",
-    "created_at": "2023-08-05T18:00:00Z",
-    "updated_at": "2023-08-05T18:00:00Z"
+    "updated_at": "2023-04-01T13:45:00Z",
+    "materials": []
   }
 ]

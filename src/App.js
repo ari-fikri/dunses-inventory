@@ -39,17 +39,23 @@ function App() {
     setClients(clients.filter(c => c.client_code !== clientCode));
   };
 
-  const handleSaveProduct = (productToSave) => {
+  const handleSaveProduct = (product) => {
     const now = new Date().toISOString();
-    const existingProductIndex = products.findIndex(p => p.product_code === productToSave.product_code);
-
-    if (existingProductIndex > -1) {
-      const updatedProducts = [...products];
-      updatedProducts[existingProductIndex] = { ...productToSave, updated_at: now };
+    if (product.product_code && products.some(p => p.product_code === product.product_code)) {
+      // Update existing product
+      const updatedProducts = products.map(p =>
+        p.product_code === product.product_code ? { ...p, ...product, updated_at: now } : p
+      );
       setProducts(updatedProducts);
     } else {
-      const newProduct = { ...productToSave, created_at: now, updated_at: now };
-      setProducts([newProduct, ...products]);
+      // Add new product
+      const newProduct = {
+        ...product,
+        created_at: now,
+        updated_at: now,
+        materials: product.product_category === 'FG' ? product.materials || [] : [],
+      };
+      setProducts([...products, newProduct]);
     }
   };
 
