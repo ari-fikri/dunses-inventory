@@ -1,56 +1,66 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './App.css';
 import HomeScreen from './components/HomeScreen';
 import ClientList from './components/ClientList';
 import ClientForm from './components/ClientForm';
-import clientsData from './data/clients.json';
+import ProductList from './components/ProductList';
+import ProductForm from './components/ProductForm';
+import clientData from './data/clients.json';
+import productData from './data/products.json';
+import './App.css';
 
 function App() {
   const [clients, setClients] = useState([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const sortedClients = [...clientsData].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    const sortedClients = [...clientData].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     setClients(sortedClients);
+
+    const sortedProducts = [...productData].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    setProducts(sortedProducts);
   }, []);
 
-  const handleSaveClient = (clientData) => {
+  const handleSaveClient = (clientToSave) => {
     const now = new Date().toISOString();
-    const existingClientIndex = clients.findIndex(
-      (c) => c.client_code === clientData.client_code
-    );
+    const existingClientIndex = clients.findIndex(c => c.client_code === clientToSave.client_code);
 
     if (existingClientIndex > -1) {
       const updatedClients = [...clients];
-      const existingClient = updatedClients[existingClientIndex];
-      updatedClients[existingClientIndex] = { ...existingClient, ...clientData, updated_at: now };
+      updatedClients[existingClientIndex] = { ...clientToSave, updated_at: now };
       setClients(updatedClients);
     } else {
-      const newClient = { ...clientData, created_at: now, updated_at: now };
+      const newClient = { ...clientToSave, created_at: now, updated_at: now };
       setClients([newClient, ...clients]);
+    }
+  };
+
+  const handleSaveProduct = (productToSave) => {
+    const now = new Date().toISOString();
+    const existingProductIndex = products.findIndex(p => p.product_code === productToSave.product_code);
+
+    if (existingProductIndex > -1) {
+      const updatedProducts = [...products];
+      updatedProducts[existingProductIndex] = { ...productToSave, updated_at: now };
+      setProducts(updatedProducts);
+    } else {
+      const newProduct = { ...productToSave, created_at: now, updated_at: now };
+      setProducts([newProduct, ...products]);
     }
   };
 
   return (
     <Router>
       <div className="App">
-        <header className="App-header">
-          <h1>Client Management</h1>
-        </header>
-        <main>
-          <Routes>
-            <Route path="/" element={<HomeScreen />} />
-            <Route path="/clients" element={<ClientList clients={clients} />} />
-            <Route
-              path="/client-form"
-              element={<ClientForm onSave={handleSaveClient} />}
-            />
-            <Route
-              path="/client-form/:clientId"
-              element={<ClientForm onSave={handleSaveClient} clients={clients} />}
-            />
-          </Routes>
-        </main>
+        <Routes>
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="/clients" element={<ClientList clients={clients} />} />
+          <Route path="/client-form" element={<ClientForm onSave={handleSaveClient} clients={clients} />} />
+          <Route path="/client-form/:clientId" element={<ClientForm onSave={handleSaveClient} clients={clients} />} />
+          <Route path="/products" element={<ProductList products={products} />} />
+          <Route path="/product-form" element={<ProductForm onSave={handleSaveProduct} products={products} />} />
+          <Route path="/product-form/:productCode" element={<ProductForm onSave={handleSaveProduct} products={products} />} />
+        </Routes>
       </div>
     </Router>
   );
