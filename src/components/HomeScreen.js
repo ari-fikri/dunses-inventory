@@ -10,6 +10,21 @@ const HomeScreen = () => {
         <p>Welcome to your dashboard. Manage clients and products with ease.</p>
       </header>
       <div className="section">
+        <h2 className="section-title">Transactions</h2>
+        <div className="card-grid">
+          <div className="card glass-surface">
+            <h3>Inventory</h3>
+            <p className="card-description">Track stock movements and manage inventory levels.</p>
+            <Link to="/inventory" className="card-link">Go to Inventory</Link>
+          </div>
+          <div className="card glass-surface">
+            <h3>Production</h3>
+            <p className="card-description">Manage production orders and material consumption.</p>
+            <Link to="/production" className="card-link">Go to Production</Link>
+          </div>
+        </div>
+      </div>
+      <div className="section">
         <h2 className="section-title">Master Data</h2>
         <div className="card-grid">
           <div className="card glass-surface">
