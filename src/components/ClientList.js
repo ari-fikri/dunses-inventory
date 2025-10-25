@@ -1,26 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './ClientList.css';
 
-// Mock data for demonstration
-const mockClients = Array.from({ length: 25 }, (_, i) => ({
-  client_code: `C${100 + i}`,
-  client_name: `Client Name ${i + 1}`,
-  client_address: `Address ${i + 1}`,
-  client_office_phone: `123-456-789${i}`,
-  client_pic_name: `PIC ${i + 1}`,
-  client_mobile_phone: `987-654-321${i}`,
-}));
-
-const ClientList = () => {
-  const [clients, setClients] = useState([]);
+const ClientList = ({ clients }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const clientsPerPage = 10;
-
-  useEffect(() => {
-    // In a real app, you would fetch this data from an API
-    setClients(mockClients);
-  }, []);
 
   // Pagination logic
   const indexOfLastClient = currentPage * clientsPerPage;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './ClientForm.css';
 
-const ClientForm = () => {
+const ClientForm = ({ onSave, clients }) => {
   const { clientId } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -15,14 +15,13 @@ const ClientForm = () => {
   });
 
   useEffect(() => {
-    if (clientId) {
-      // In a real app, you would fetch the client data from an API
-      // For now, we'll just log it.
-      console.log("Editing client with ID:", clientId);
-      // You would set the form data with the fetched client data here.
-      // For example: setFormData(fetchedClientData);
+    if (clientId && clients) {
+      const clientToEdit = clients.find((c) => c.client_code === clientId);
+      if (clientToEdit) {
+        setFormData(clientToEdit);
+      }
     }
-  }, [clientId]);
+  }, [clientId, clients]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,13 +33,7 @@ const ClientForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (clientId) {
-      // Handle update logic
-      console.log("Updating client:", formData);
-    } else {
-      // Handle create logic
-      console.log("Creating new client:", formData);
-    }
+    onSave(formData);
     navigate('/clients'); // Redirect to client list after submission
   };
 
