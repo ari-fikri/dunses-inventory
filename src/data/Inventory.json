@@ -3,6 +3,7 @@
     "inventory_code": "INV-00001",
     "inventory_date": "2023-10-27",
     "inventory_type": "IN",
+    "reference_code": "PO-001",
     "description": "Receiving raw materials from supplier",
     "created_at": "2023-10-27T10:00:00Z",
     "updated_at": "2023-10-27T10:00:00Z"
@@ -11,6 +12,7 @@
     "inventory_code": "INV-00002",
     "inventory_date": "2023-10-27",
     "inventory_type": "OUT",
+    "reference_code": "SO-001",
     "description": "Shipping finished goods to customer",
     "created_at": "2023-10-27T11:30:00Z",
     "updated_at": "2023-10-27T11:30:00Z"
@@ -19,6 +21,7 @@
     "inventory_code": "INV-00003",
     "inventory_date": "2023-10-28",
     "inventory_type": "TRF",
+    "reference_code": "WO-001",
     "description": "Transferring materials to production floor",
     "created_at": "2023-10-28T09:00:00Z",
     "updated_at": "2023-10-28T09:00:00Z"
@@ -27,6 +30,7 @@
     "inventory_code": "INV-00004",
     "inventory_date": "2023-10-28",
     "inventory_type": "ADJ",
+    "reference_code": "CC-001",
     "description": "Stock adjustment after cycle count",
     "created_at": "2023-10-28T14:00:00Z",
     "updated_at": "2023-10-28T14:00:00Z"
@@ -35,6 +39,7 @@
     "inventory_code": "INV-00005",
     "inventory_date": "2023-10-29",
     "inventory_type": "PROD",
+    "reference_code": "WO-002",
     "description": "Finished goods produced from work order",
     "created_at": "2023-10-29T16:00:00Z",
     "updated_at": "2023-10-29T16:00:00Z"

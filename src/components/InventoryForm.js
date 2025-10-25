@@ -12,6 +12,7 @@ const InventoryForm = ({ onSave, inventory, inventoryDtl }) => {
     inventory_code: '',
     inventory_date: new Date().toISOString().split('T')[0],
     inventory_type: '',
+    reference_code: '',
     description: '',
   });
   const [details, setDetails] = useState([]);
@@ -102,6 +103,15 @@ const InventoryForm = ({ onSave, inventory, inventoryDtl }) => {
               value={transaction.inventory_date}
               onChange={handleHeaderChange}
               required
+            />
+          </div>
+          <div className="form-group">
+            <label>Reference Code</label>
+            <input
+              type="text"
+              name="reference_code"
+              value={transaction.reference_code}
+              onChange={handleHeaderChange}
             />
           </div>
           <div className="form-group">

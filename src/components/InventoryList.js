@@ -60,6 +60,7 @@ const InventoryList = ({ inventory, onDelete }) => {
             <th>Code</th>
             <th>Date</th>
             <th>Type</th>
+            <th>Reference</th>
             <th>Description</th>
             <th>Actions</th>
           </tr>
@@ -71,6 +72,7 @@ const InventoryList = ({ inventory, onDelete }) => {
               <td>{item.inventory_code}</td>
               <td>{formatDate(item.inventory_date)}</td>
               <td>{getInventoryTypeName(item.inventory_type)}</td>
+              <td>{item.reference_code}</td>
               <td>{item.description}</td>
               <td>
                 <Link to={`/inventory-form/${item.inventory_code}`} className="action-button">
