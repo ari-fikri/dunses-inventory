@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import HomeScreen from './components/HomeScreen';
+import ClientList from './components/ClientList';
 import ClientForm from './components/ClientForm';
 
 function App() {
@@ -14,7 +15,9 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<HomeScreen />} />
+            <Route path="/clients" element={<ClientList />} />
             <Route path="/client-form" element={<ClientForm />} />
+            <Route path="/client-form/:clientId" element={<ClientForm />} />
           </Routes>
         </main>
       </div>

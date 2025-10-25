@@ -6,7 +6,7 @@ const HomeScreen = () => {
   return (
     <div className="home-screen">
       <div className="card-container">
-        <Link to="/client-form" className="card">
+        <Link to="/clients" className="card">
           <h3>Clients</h3>
           <p>Manage client information</p>
         </Link>

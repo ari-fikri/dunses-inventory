@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import './ClientForm.css';
 
 const ClientForm = () => {
+  const { clientId } = useParams();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     client_code: '',
     client_name: '',
@@ -10,6 +13,16 @@ const ClientForm = () => {
     client_pic_name: '',
     client_mobile_phone: ''
   });
+
+  useEffect(() => {
+    if (clientId) {
+      // In a real app, you would fetch the client data from an API
+      // For now, we'll just log it.
+      console.log("Editing client with ID:", clientId);
+      // You would set the form data with the fetched client data here.
+      // For example: setFormData(fetchedClientData);
+    }
+  }, [clientId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,12 +34,19 @@ const ClientForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
+    if (clientId) {
+      // Handle update logic
+      console.log("Updating client:", formData);
+    } else {
+      // Handle create logic
+      console.log("Creating new client:", formData);
+    }
+    navigate('/clients'); // Redirect to client list after submission
   };
 
   return (
     <form onSubmit={handleSubmit} className="client-form">
+      <h2>{clientId ? 'Edit Client' : 'Add New Client'}</h2>
       <div className="form-group">
         <label htmlFor="client_code">Client Code</label>
         <input
@@ -37,6 +57,7 @@ const ClientForm = () => {
           onChange={handleChange}
           maxLength="5"
           required
+          disabled={!!clientId} // Disable code field when editing
         />
       </div>
       <div className="form-group">
@@ -94,7 +115,7 @@ const ClientForm = () => {
           maxLength="20"
         />
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit">{clientId ? 'Update Client' : 'Add Client'}</button>
     </form>
   );
 };
