@@ -50,8 +50,10 @@ const ProductList = ({ products, onDelete }) => {
       <table className="product-table">
         <thead>
           <tr>
+            <th>No.</th>
             <th>Code</th>
             <th>Name</th>
+            <th>Category</th>
             <th>Price (Rp)</th>
             <th>Stock (kg)</th>
             <th>Created At</th>
@@ -60,10 +62,12 @@ const ProductList = ({ products, onDelete }) => {
           </tr>
         </thead>
         <tbody>
-          {currentProducts.map((product) => (
+          {currentProducts.map((product, index) => (
             <tr key={product.product_code}>
+              <td>{indexOfFirstProduct + index + 1}</td>
               <td>{product.product_code}</td>
               <td>{product.product_name}</td>
+              <td>{product.product_category}</td>
               <td>{product.product_price}</td>
               <td>{product.current_stock}</td>
               <td>{formatDate(product.created_at)}</td>

@@ -10,6 +10,7 @@ const ProductForm = ({ onSave, products }) => {
     product_name: '',
     product_price: '',
     current_stock: '',
+    product_category: 'FG', // Default to Finished Goods
   });
 
   useEffect(() => {
@@ -76,6 +77,21 @@ const ProductForm = ({ onSave, products }) => {
             onChange={handleChange}
             required
           />
+        </div>
+        <div className="form-group">
+          <label>Category</label>
+          <select
+            name="product_category"
+            value={product.product_category}
+            onChange={handleChange}
+            required
+          >
+            <option value="RM">Raw Material (RM)</option>
+            <option value="SFG">Semi-Finished Goods (SFG)</option>
+            <option value="FG">Finished Goods (FG)</option>
+            <option value="CIM">Consumable/Indirect Material (CIM)</option>
+            <option value="PM">Packaging Material (PM)</option>
+          </select>
         </div>
         <button type="submit" className="submit-button">Save Product</button>
       </form>
