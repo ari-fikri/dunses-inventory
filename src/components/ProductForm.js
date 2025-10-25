@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './ProductForm.css';
+import systemData from '../data/system.json';
 
 const ProductForm = ({ products, onSave }) => {
   const { productCode } = useParams();
@@ -9,28 +10,41 @@ const ProductForm = ({ products, onSave }) => {
   const [product, setProduct] = useState({
     product_code: '',
     product_name: '',
-    product_category: 'FG',
+    product_category: '',
     product_price: '',
     current_stock: '',
     materials: [],
   });
 
+  const [categories, setCategories] = useState([]);
   const [material, setMaterial] = useState({
     material_code: '',
     material_qty: '',
   });
 
   useEffect(() => {
-    console.log('ProductForm useEffect triggered. productCode:', productCode);
+    const productCategories = systemData.filter(
+      (item) => item.function === 'product' && item.sub_function === 'category'
+    );
+    setCategories(productCategories);
+
     if (productCode) {
       const existingProduct = products.find(p => p.product_code === productCode);
-      console.log('Found existing product:', existingProduct);
       if (existingProduct) {
         setProduct({
           ...existingProduct,
           materials: existingProduct.materials || [],
         });
       }
+    } else if (productCategories.length > 0) {
+      setProduct({
+        product_code: '',
+        product_name: '',
+        product_category: productCategories[0].code,
+        product_price: '',
+        current_stock: '',
+        materials: [],
+      });
     }
   }, [productCode, products]);
 
@@ -81,9 +95,6 @@ const ProductForm = ({ products, onSave }) => {
     }, 0);
   };
 
-  console.log('Rendering ProductForm. Current product state:', product);
-  console.log('Is category FG?', product.product_category === 'FG');
-
   return (
     <div className="product-form-container">
       <h2>{productCode ? 'Edit Product' : 'Add Product'}</h2>
@@ -116,8 +127,11 @@ const ProductForm = ({ products, onSave }) => {
             value={product.product_category}
             onChange={handleChange}
           >
-            <option value="FG">Finished Good</option>
-            <option value="RM">Raw Material</option>
+            {categories.map((cat) => (
+              <option key={cat.code} value={cat.code}>
+                {cat.value_en}
+              </option>
+            ))}
           </select>
         </div>
         <div className="form-group">

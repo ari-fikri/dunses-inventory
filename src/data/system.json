@@ -1,0 +1,37 @@
+[
+  {
+    "function": "product",
+    "sub_function": "category",
+    "code": "FG",
+    "value_en": "Finished Good",
+    "value_id": ""
+  },
+  {
+    "function": "product",
+    "sub_function": "category",
+    "code": "SFG",
+    "value_en": "Semi Finished Good",
+    "value_id": ""
+  },
+  {
+    "function": "product",
+    "sub_function": "category",
+    "code": "RM",
+    "value_en": "Raw Material",
+    "value_id": ""
+  },
+  {
+    "function": "product",
+    "sub_function": "category",
+    "code": "CIM",
+    "value_en": "Consumable/Indirect Material",
+    "value_id": ""
+  },
+  {
+    "function": "product",
+    "sub_function": "category",
+    "code": "PM",
+    "value_en": "Packaging Material",
+    "value_id": ""
+  }
+]
