@@ -1,0 +1,37 @@
+[
+  {
+    "inventory_code": "INV-00001",
+    "product_code": "RM-001",
+    "qty": 100.50,
+    "created_at": "2023-10-27T10:00:00Z",
+    "updated_at": "2023-10-27T10:00:00Z"
+  },
+  {
+    "inventory_code": "INV-00002",
+    "product_code": "FG-001",
+    "qty": 25.00,
+    "created_at": "2023-10-27T11:30:00Z",
+    "updated_at": "2023-10-27T11:30:00Z"
+  },
+  {
+    "inventory_code": "INV-00003",
+    "product_code": "RM-002",
+    "qty": 50.00,
+    "created_at": "2023-10-28T09:00:00Z",
+    "updated_at": "2023-10-28T09:00:00Z"
+  },
+  {
+    "inventory_code": "INV-00004",
+    "product_code": "RM-001",
+    "qty": -5.50,
+    "created_at": "2023-10-28T14:00:00Z",
+    "updated_at": "2023-10-28T14:00:00Z"
+  },
+  {
+    "inventory_code": "INV-00005",
+    "product_code": "FG-002",
+    "qty": 10.00,
+    "created_at": "2023-10-29T16:00:00Z",
+    "updated_at": "2023-10-29T16:00:00Z"
+  }
+]

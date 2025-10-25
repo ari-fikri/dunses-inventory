@@ -5,6 +5,7 @@ import ClientList from './components/ClientList';
 import ClientForm from './components/ClientForm';
 import ProductList from './components/ProductList';
 import ProductForm from './components/ProductForm';
+import InventoryList from './components/InventoryList';
 import clientData from './data/clients.json';
 import productData from './data/products.json';
 import './App.css';
@@ -90,6 +91,7 @@ function App() {
         <Route path="/products" element={<ProductList products={products} onDelete={handleDeleteProduct} />} />
         <Route path="/product-form" element={<ProductForm onSave={handleSaveProduct} products={products} />} />
         <Route path="/product-form/:productCode" element={<ProductForm onSave={handleSaveProduct} products={products} />} />
+        <Route path="/inventory" element={<InventoryList />} />
       </Routes>
     </div>
   );

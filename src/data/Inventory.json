@@ -1,0 +1,42 @@
+[
+  {
+    "inventory_code": "INV-00001",
+    "inventory_date": "2023-10-27",
+    "inventory_type": "IN",
+    "description": "Receiving raw materials from supplier",
+    "created_at": "2023-10-27T10:00:00Z",
+    "updated_at": "2023-10-27T10:00:00Z"
+  },
+  {
+    "inventory_code": "INV-00002",
+    "inventory_date": "2023-10-27",
+    "inventory_type": "OUT",
+    "description": "Shipping finished goods to customer",
+    "created_at": "2023-10-27T11:30:00Z",
+    "updated_at": "2023-10-27T11:30:00Z"
+  },
+  {
+    "inventory_code": "INV-00003",
+    "inventory_date": "2023-10-28",
+    "inventory_type": "TRF",
+    "description": "Transferring materials to production floor",
+    "created_at": "2023-10-28T09:00:00Z",
+    "updated_at": "2023-10-28T09:00:00Z"
+  },
+  {
+    "inventory_code": "INV-00004",
+    "inventory_date": "2023-10-28",
+    "inventory_type": "ADJ",
+    "description": "Stock adjustment after cycle count",
+    "created_at": "2023-10-28T14:00:00Z",
+    "updated_at": "2023-10-28T14:00:00Z"
+  },
+  {
+    "inventory_code": "INV-00005",
+    "inventory_date": "2023-10-29",
+    "inventory_type": "PROD",
+    "description": "Finished goods produced from work order",
+    "created_at": "2023-10-29T16:00:00Z",
+    "updated_at": "2023-10-29T16:00:00Z"
+  }
+]
