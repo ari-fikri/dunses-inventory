@@ -44,6 +44,9 @@ const ProductList = ({ products, onDelete }) => {
       <Link to="/product-form" className="add-product-button">
         Add New Product
       </Link>
+      <Link to="/" className="back-to-home-button">
+        Back to Home
+      </Link>
       <table className="product-table">
         <thead>
           <tr>

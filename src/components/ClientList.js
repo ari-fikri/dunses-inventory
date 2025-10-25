@@ -44,6 +44,9 @@ const ClientList = ({ clients, onDelete }) => {
       <Link to="/client-form" className="add-client-button">
         Add New Client
       </Link>
+      <Link to="/" className="back-to-home-button">
+        Back to Home
+      </Link>
       <table className="client-table">
         <thead>
           <tr>
