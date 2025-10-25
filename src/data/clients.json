@@ -5,7 +5,9 @@
     "client_address": "123 Tech Avenue, Silicon Valley, CA",
     "client_office_phone": "408-555-0101",
     "client_pic_name": "Alice Johnson",
-    "client_mobile_phone": "408-555-0102"
+    "client_mobile_phone": "408-555-0102",
+    "created_at": "2023-01-10T10:00:00Z",
+    "updated_at": "2023-01-10T10:00:00Z"
   },
   {
     "client_code": "C102",
@@ -13,7 +15,9 @@
     "client_address": "456 Business Blvd, New York, NY",
     "client_office_phone": "212-555-0103",
     "client_pic_name": "Bob Williams",
-    "client_mobile_phone": "212-555-0104"
+    "client_mobile_phone": "212-555-0104",
+    "created_at": "2023-01-11T11:30:00Z",
+    "updated_at": "2023-01-11T11:30:00Z"
   },
   {
     "client_code": "C103",
@@ -21,7 +25,9 @@
     "client_address": "789 Future Drive, Boston, MA",
     "client_office_phone": "617-555-0105",
     "client_pic_name": "Charlie Brown",
-    "client_mobile_phone": "617-555-0106"
+    "client_mobile_phone": "617-555-0106",
+    "created_at": "2023-02-15T09:00:00Z",
+    "updated_at": "2023-02-15T09:00:00Z"
   },
   {
     "client_code": "C104",
@@ -29,7 +35,9 @@
     "client_address": "101 Summit Peak, Denver, CO",
     "client_office_phone": "303-555-0107",
     "client_pic_name": "Diana Prince",
-    "client_mobile_phone": "303-555-0108"
+    "client_mobile_phone": "303-555-0108",
+    "created_at": "2023-02-20T14:00:00Z",
+    "updated_at": "2023-02-20T14:00:00Z"
   },
   {
     "client_code": "C105",
@@ -37,7 +45,9 @@
     "client_address": "212 Galaxy Way, Houston, TX",
     "client_office_phone": "713-555-0109",
     "client_pic_name": "Ethan Hunt",
-    "client_mobile_phone": "713-555-0110"
+    "client_mobile_phone": "713-555-0110",
+    "created_at": "2023-03-05T16:45:00Z",
+    "updated_at": "2023-03-05T16:45:00Z"
   },
   {
     "client_code": "C106",
@@ -45,7 +55,9 @@
     "client_address": "333 Element Rd, Chicago, IL",
     "client_office_phone": "312-555-0111",
     "client_pic_name": "Fiona Glenanne",
-    "client_mobile_phone": "312-555-0112"
+    "client_mobile_phone": "312-555-0112",
+    "created_at": "2023-03-12T10:20:00Z",
+    "updated_at": "2023-03-12T10:20:00Z"
   },
   {
     "client_code": "C107",
@@ -53,7 +65,9 @@
     "client_address": "444 Innovation Ct, Seattle, WA",
     "client_office_phone": "206-555-0113",
     "client_pic_name": "George Jetson",
-    "client_mobile_phone": "206-555-0114"
+    "client_mobile_phone": "206-555-0114",
+    "created_at": "2023-04-01T08:00:00Z",
+    "updated_at": "2023-04-01T08:00:00Z"
   },
   {
     "client_code": "C108",
@@ -61,7 +75,9 @@
     "client_address": "555 Frontier Ln, Austin, TX",
     "client_office_phone": "512-555-0115",
     "client_pic_name": "Hannah Montana",
-    "client_mobile_phone": "512-555-0116"
+    "client_mobile_phone": "512-555-0116",
+    "created_at": "2023-04-10T13:00:00Z",
+    "updated_at": "2023-04-10T13:00:00Z"
   },
   {
     "client_code": "C109",
@@ -69,7 +85,9 @@
     "client_address": "666 Velocity St, Miami, FL",
     "client_office_phone": "305-555-0117",
     "client_pic_name": "Iris West",
-    "client_mobile_phone": "305-555-0118"
+    "client_mobile_phone": "305-555-0118",
+    "created_at": "2023-05-22T11:00:00Z",
+    "updated_at": "2023-05-22T11:00:00Z"
   },
   {
     "client_code": "C110",
@@ -77,7 +95,9 @@
     "client_address": "777 Pinnacle Pl, San Francisco, CA",
     "client_office_phone": "415-555-0119",
     "client_pic_name": "Jack Sparrow",
-    "client_mobile_phone": "415-555-0120"
+    "client_mobile_phone": "415-555-0120",
+    "created_at": "2023-05-30T17:00:00Z",
+    "updated_at": "2023-05-30T17:00:00Z"
   },
   {
     "client_code": "C111",
@@ -85,7 +105,9 @@
     "client_address": "888 Spark Ave, Los Angeles, CA",
     "client_office_phone": "213-555-0121",
     "client_pic_name": "Kara Danvers",
-    "client_mobile_phone": "213-555-0122"
+    "client_mobile_phone": "213-555-0122",
+    "created_at": "2023-06-15T09:30:00Z",
+    "updated_at": "2023-06-15T09:30:00Z"
   },
   {
     "client_code": "C112",
@@ -93,7 +115,9 @@
     "client_address": "999 Connection Dr, Atlanta, GA",
     "client_office_phone": "404-555-0123",
     "client_pic_name": "Luke Skywalker",
-    "client_mobile_phone": "404-555-0124"
+    "client_mobile_phone": "404-555-0124",
+    "created_at": "2023-07-02T15:00:00Z",
+    "updated_at": "2023-07-02T15:00:00Z"
   },
   {
     "client_code": "C113",
@@ -101,7 +125,9 @@
     "client_address": "121 Harbor View, Baltimore, MD",
     "client_office_phone": "410-555-0125",
     "client_pic_name": "Marge Simpson",
-    "client_mobile_phone": "410-555-0126"
+    "client_mobile_phone": "410-555-0126",
+    "created_at": "2023-07-21T12:00:00Z",
+    "updated_at": "2023-07-21T12:00:00Z"
   },
   {
     "client_code": "C114",
@@ -109,7 +135,9 @@
     "client_address": "232 Insight Rd, Portland, OR",
     "client_office_phone": "503-555-0127",
     "client_pic_name": "Ned Flanders",
-    "client_mobile_phone": "503-555-0128"
+    "client_mobile_phone": "503-555-0128",
+    "created_at": "2023-08-18T10:15:00Z",
+    "updated_at": "2023-08-18T10:15:00Z"
   },
   {
     "client_code": "C115",
@@ -117,6 +145,8 @@
     "client_address": "343 Archstone Way, Philadelphia, PA",
     "client_office_phone": "215-555-0129",
     "client_pic_name": "Olivia Benson",
-    "client_mobile_phone": "215-555-0130"
+    "client_mobile_phone": "215-555-0130",
+    "created_at": "2023-09-01T18:00:00Z",
+    "updated_at": "2023-09-01T18:00:00Z"
   }
 ]

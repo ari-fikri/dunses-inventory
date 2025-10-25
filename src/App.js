@@ -10,20 +10,24 @@ function App() {
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
-    setClients(clientsData);
+    const sortedClients = [...clientsData].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    setClients(sortedClients);
   }, []);
 
   const handleSaveClient = (clientData) => {
+    const now = new Date().toISOString();
     const existingClientIndex = clients.findIndex(
       (c) => c.client_code === clientData.client_code
     );
 
     if (existingClientIndex > -1) {
       const updatedClients = [...clients];
-      updatedClients[existingClientIndex] = clientData;
+      const existingClient = updatedClients[existingClientIndex];
+      updatedClients[existingClientIndex] = { ...existingClient, ...clientData, updated_at: now };
       setClients(updatedClients);
     } else {
-      setClients([...clients, clientData]);
+      const newClient = { ...clientData, created_at: now, updated_at: now };
+      setClients([newClient, ...clients]);
     }
   };
 

@@ -32,6 +32,8 @@ const ClientList = ({ clients }) => {
             <th>Office Phone</th>
             <th>PIC</th>
             <th>Mobile Phone</th>
+            <th>Created At</th>
+            <th>Updated At</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -44,6 +46,8 @@ const ClientList = ({ clients }) => {
               <td>{client.client_office_phone}</td>
               <td>{client.client_pic_name}</td>
               <td>{client.client_mobile_phone}</td>
+              <td>{new Date(client.created_at).toLocaleString()}</td>
+              <td>{new Date(client.updated_at).toLocaleString()}</td>
               <td>
                 <Link to={`/client-form/${client.client_code}`} className="action-button">
                   Edit
