@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './InventoryList.css';
-import inventoryData from '../data/Inventory.json';
 import systemData from '../data/system.json';
 
-const InventoryList = () => {
+const InventoryList = ({ inventory, onDelete }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -20,9 +19,9 @@ const InventoryList = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = inventoryData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = inventory.slice(indexOfFirstItem, indexOfLastItem);
 
-  const totalPages = Math.ceil(inventoryData.length / itemsPerPage);
+  const totalPages = Math.ceil(inventory.length / itemsPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -37,6 +36,12 @@ const InventoryList = () => {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
+  };
+
+  const handleDelete = (inventoryCode) => {
+    if (window.confirm('Are you sure you want to delete this transaction?')) {
+      onDelete(inventoryCode);
+    }
   };
 
   return (
@@ -71,7 +76,7 @@ const InventoryList = () => {
                 <Link to={`/inventory-form/${item.inventory_code}`} className="action-button">
                   Edit
                 </Link>
-                <button className="action-button delete-button">
+                <button onClick={() => handleDelete(item.inventory_code)} className="action-button delete-button">
                   Delete
                 </button>
               </td>

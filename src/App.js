@@ -6,13 +6,18 @@ import ClientForm from './components/ClientForm';
 import ProductList from './components/ProductList';
 import ProductForm from './components/ProductForm';
 import InventoryList from './components/InventoryList';
+import InventoryForm from './components/InventoryForm';
 import clientData from './data/clients.json';
 import productData from './data/products.json';
+import initialInventoryData from './data/Inventory.json';
+import initialInventoryDtlData from './data/inventory_dtl.json';
 import './App.css';
 
 function App() {
   const [clients, setClients] = useState([]);
   const [products, setProducts] = useState([]);
+  const [inventory, setInventory] = useState([]);
+  const [inventoryDtl, setInventoryDtl] = useState([]);
 
   useEffect(() => {
     const sortedClients = [...clientData].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
@@ -20,6 +25,10 @@ function App() {
 
     const sortedProducts = [...productData].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     setProducts(sortedProducts);
+
+    const sortedInventory = [...initialInventoryData].sort((a, b) => new Date(b.inventory_date) - new Date(a.inventory_date));
+    setInventory(sortedInventory);
+    setInventoryDtl(initialInventoryDtlData);
   }, []);
 
   const handleSaveClient = (clientToSave, originalClientCode = null) => {
@@ -81,6 +90,43 @@ function App() {
     setProducts(products.filter(p => p.product_code !== productCode));
   };
 
+  const handleSaveInventory = (transaction, details, originalInventoryCode = null) => {
+    const now = new Date().toISOString();
+
+    if (originalInventoryCode) {
+      // Editing
+      const updatedInventory = inventory.map(inv =>
+        inv.inventory_code === originalInventoryCode ? { ...inv, ...transaction, updated_at: now } : inv
+      );
+      setInventory(updatedInventory);
+
+      const otherDetails = inventoryDtl.filter(d => d.inventory_code !== originalInventoryCode);
+      const updatedDetails = details.map(d => ({ ...d, inventory_code: originalInventoryCode, created_at: d.created_at || now, updated_at: now }));
+      setInventoryDtl([...otherDetails, ...updatedDetails]);
+
+    } else {
+      // Adding
+      if (inventory.some(i => i.inventory_code === transaction.inventory_code)) {
+        alert('Inventory code already exists.');
+        return;
+      }
+      const newTransaction = {
+        ...transaction,
+        created_at: now,
+        updated_at: now,
+      };
+      setInventory([newTransaction, ...inventory]);
+
+      const newDetails = details.map(d => ({ ...d, inventory_code: transaction.inventory_code, created_at: now, updated_at: now }));
+      setInventoryDtl([...inventoryDtl, ...newDetails]);
+    }
+  };
+
+  const handleDeleteInventory = (inventoryCode) => {
+    setInventory(inventory.filter(i => i.inventory_code !== inventoryCode));
+    setInventoryDtl(inventoryDtl.filter(d => d.inventory_code !== inventoryCode));
+  };
+
   return (
     <div className="App">
       <Routes>
@@ -91,7 +137,9 @@ function App() {
         <Route path="/products" element={<ProductList products={products} onDelete={handleDeleteProduct} />} />
         <Route path="/product-form" element={<ProductForm onSave={handleSaveProduct} products={products} />} />
         <Route path="/product-form/:productCode" element={<ProductForm onSave={handleSaveProduct} products={products} />} />
-        <Route path="/inventory" element={<InventoryList />} />
+        <Route path="/inventory" element={<InventoryList inventory={inventory} onDelete={handleDeleteInventory} />} />
+        <Route path="/inventory-form" element={<InventoryForm onSave={handleSaveInventory} inventory={inventory} inventoryDtl={inventoryDtl} />} />
+        <Route path="/inventory-form/:inventoryCode" element={<InventoryForm onSave={handleSaveInventory} inventory={inventory} inventoryDtl={inventoryDtl} />} />
       </Routes>
     </div>
   );

@@ -33,5 +33,40 @@
     "code": "PM",
     "value_en": "Packaging Material",
     "value_id": ""
+  },
+  {
+    "function": "inventory",
+    "sub_function": "inventory_type",
+    "code": "IN",
+    "value_en": "Inbound",
+    "value_id": ""
+  },
+  {
+    "function": "inventory",
+    "sub_function": "inventory_type",
+    "code": "OUT",
+    "value_en": "OutBound",
+    "value_id": ""
+  },
+  {
+    "function": "inventory",
+    "sub_function": "inventory_type",
+    "code": "TRF",
+    "value_en": "Transfer",
+    "value_id": ""
+  },
+  {
+    "function": "inventory",
+    "sub_function": "inventory_type",
+    "code": "ADJ",
+    "value_en": "Adjustment",
+    "value_id": ""
+  },
+  {
+    "function": "inventory",
+    "sub_function": "inventory_type",
+    "code": "PROD",
+    "value_en": "Produce",
+    "value_id": ""
   }
 ]
