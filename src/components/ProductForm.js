@@ -21,10 +21,15 @@ const ProductForm = ({ products, onSave }) => {
   });
 
   useEffect(() => {
+    console.log('ProductForm useEffect triggered. productCode:', productCode);
     if (productCode) {
       const existingProduct = products.find(p => p.product_code === productCode);
+      console.log('Found existing product:', existingProduct);
       if (existingProduct) {
-        setProduct(existingProduct);
+        setProduct({
+          ...existingProduct,
+          materials: existingProduct.materials || [],
+        });
       }
     }
   }, [productCode, products]);
@@ -70,11 +75,14 @@ const ProductForm = ({ products, onSave }) => {
   const availableMaterials = products.filter(p => p.product_code !== product.product_code);
 
   const calculateTotal = () => {
-    return product.materials.reduce((total, mat) => {
+    return (product.materials || []).reduce((total, mat) => {
       const price = getMaterialInfo(mat.material_code, 'product_price') || 0;
       return total + (price * mat.material_qty);
     }, 0);
   };
+
+  console.log('Rendering ProductForm. Current product state:', product);
+  console.log('Is category FG?', product.product_category === 'FG');
 
   return (
     <div className="product-form-container">
@@ -148,7 +156,7 @@ const ProductForm = ({ products, onSave }) => {
                 </tr>
               </thead>
               <tbody>
-                {product.materials && product.materials.map((mat) => {
+                {(product.materials || []).map((mat) => {
                   const price = getMaterialInfo(mat.material_code, 'product_price') || 0;
                   const subtotal = price * mat.material_qty;
                   return (
