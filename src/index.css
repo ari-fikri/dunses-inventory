@@ -1,13 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #2563eb;
+  --primary-color-dark: #1e40af;
+  --background-gradient-start: #eef2ff;
+  --background-gradient-end: #ffffff;
+  --text-color: #0f172a;
+  --text-color-dark: #0b1220;
+  --muted-color: #6b7280;
+  --surface-color: rgba(255, 255, 255, 0.88);
+  --accent-color: #7c3aed;
+  --soft-shadow: 0 6px 22px rgba(2, 6, 23, 0.04);
+  --border-radius-md: 8px;
+  --border-radius-lg: 14px;
+}
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inter', sans-serif;
+  background-image: linear-gradient(to bottom, var(--background-gradient-start), var(--background-gradient-end));
+  color: var(--text-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.glass-surface {
+  background-color: var(--surface-color);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--soft-shadow);
 }
