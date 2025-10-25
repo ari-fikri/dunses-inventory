@@ -58,19 +58,17 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<HomeScreen />} />
-          <Route path="/clients" element={<ClientList clients={clients} onDelete={handleDeleteClient} />} />
-          <Route path="/client-form" element={<ClientForm onSave={handleSaveClient} clients={clients} />} />
-          <Route path="/client-form/:clientId" element={<ClientForm onSave={handleSaveClient} clients={clients} />} />
-          <Route path="/products" element={<ProductList products={products} onDelete={handleDeleteProduct} />} />
-          <Route path="/product-form" element={<ProductForm onSave={handleSaveProduct} products={products} />} />
-          <Route path="/product-form/:productCode" element={<ProductForm onSave={handleSaveProduct} products={products} />} />
-        </Routes>
-      </div>
-    </Router>
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<HomeScreen />} />
+        <Route path="/clients" element={<ClientList clients={clients} onDelete={handleDeleteClient} />} />
+        <Route path="/client-form" element={<ClientForm onSave={handleSaveClient} clients={clients} />} />
+        <Route path="/client-form/:clientId" element={<ClientForm onSave={handleSaveClient} clients={clients} />} />
+        <Route path="/products" element={<ProductList products={products} onDelete={handleDeleteProduct} />} />
+        <Route path="/product-form" element={<ProductForm onSave={handleSaveProduct} products={products} />} />
+        <Route path="/product-form/:productCode" element={<ProductForm onSave={handleSaveProduct} products={products} />} />
+      </Routes>
+    </div>
   );
 }
 
