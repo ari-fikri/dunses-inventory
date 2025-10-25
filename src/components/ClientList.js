@@ -39,15 +39,15 @@ const ClientList = ({ clients, onDelete }) => {
   };
 
   return (
-    <div className="client-list-container">
+    <div className="list-container">
       <h2>Client List</h2>
-      <Link to="/client-form" className="add-client-button">
+      <Link to="/client-form" className="add-button">
         Add New Client
       </Link>
-      <Link to="/" className="back-to-home-button">
+      <Link to="/" className="back-button">
         Back to Home
       </Link>
-      <table className="client-table">
+      <table className="data-table">
         <thead>
           <tr>
             <th>Rec No</th>

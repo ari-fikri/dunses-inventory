@@ -37,7 +37,7 @@ const ClientForm = ({ clients, onSave }) => {
   };
 
   return (
-    <div className="client-form-container">
+    <div className="form-container">
       <h2>{isEditing ? 'Edit Client' : 'Add Client'}</h2>
       <form onSubmit={handleSubmit} className="client-form">
         <div className="form-group">

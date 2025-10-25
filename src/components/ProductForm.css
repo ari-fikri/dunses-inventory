@@ -79,6 +79,8 @@
 }
 
 
+@import '../main.css';
+
 .materials-section {
   margin-top: 2rem;
   border-top: 1px solid #dee2e6;

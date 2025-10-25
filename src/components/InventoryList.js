@@ -45,15 +45,15 @@ const InventoryList = ({ inventory, onDelete }) => {
   };
 
   return (
-    <div className="inventory-list-container">
+    <div className="list-container">
       <h2>Inventory Transactions</h2>
-      <Link to="/inventory-form" className="add-inventory-button">
+      <Link to="/inventory-form" className="add-button">
         Add New Transaction
       </Link>
-      <Link to="/" className="back-to-home-button">
+      <Link to="/" className="back-button">
         Back to Home
       </Link>
-      <table className="inventory-table">
+      <table className="data-table">
         <thead>
           <tr>
             <th>No.</th>

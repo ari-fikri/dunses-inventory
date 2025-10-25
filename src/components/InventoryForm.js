@@ -79,7 +79,7 @@ const InventoryForm = ({ onSave, inventory, inventoryDtl }) => {
   };
 
   return (
-    <div className="inventory-form-container">
+    <div className="form-container">
       <h2>{isEditing ? 'Edit Transaction' : 'New Transaction'}</h2>
       <form onSubmit={handleSubmit} className="inventory-form">
         <div className="form-section">

@@ -6,6 +6,7 @@ import systemData from '../data/system.json';
 const ProductForm = ({ products, onSave }) => {
   const { productCode } = useParams();
   const navigate = useNavigate();
+  const isEditing = !!productCode;
 
   const [product, setProduct] = useState({
     product_code: '',
@@ -96,8 +97,8 @@ const ProductForm = ({ products, onSave }) => {
   };
 
   return (
-    <div className="product-form-container">
-      <h2>{productCode ? 'Edit Product' : 'Add Product'}</h2>
+    <div className="form-container">
+      <h2>{isEditing ? 'Edit Product' : 'Add Product'}</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Product Code</label>
@@ -225,8 +226,8 @@ const ProductForm = ({ products, onSave }) => {
         )}
 
         <div className="form-actions">
-          <button type="submit">Save</button>
-          <button type="button" onClick={() => navigate('/products')}>
+          <button type="submit" className="submit-button">Save</button>
+          <button type="button" onClick={() => navigate('/products')} className="cancel-button">
             Cancel
           </button>
         </div>

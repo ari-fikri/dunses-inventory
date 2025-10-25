@@ -39,15 +39,15 @@ const ProductList = ({ products, onDelete }) => {
   };
 
   return (
-    <div className="product-list-container">
+    <div className="list-container">
       <h2>Product List</h2>
-      <Link to="/product-form" className="add-product-button">
+      <Link to="/product-form" className="add-button">
         Add New Product
       </Link>
-      <Link to="/" className="back-to-home-button">
+      <Link to="/" className="back-button">
         Back to Home
       </Link>
-      <table className="product-table">
+      <table className="data-table">
         <thead>
           <tr>
             <th>No.</th>
