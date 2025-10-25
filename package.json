@@ -16,7 +16,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test:bdd": "cucumber-js",
-    "test:coverage": "nyc npm run test:bdd"
+    "test:coverage": "nyc --reporter=html npm run test:bdd"
   },
   "eslintConfig": {
     "extends": [
