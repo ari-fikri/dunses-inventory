@@ -7,10 +7,14 @@ import ProductList from './components/ProductList';
 import ProductForm from './components/ProductForm';
 import InventoryList from './components/InventoryList';
 import InventoryForm from './components/InventoryForm';
+import SalesOrderList from './components/SalesOrderList';
+import SalesOrderForm from './components/SalesOrderForm';
 import clientData from './data/clients.json';
 import productData from './data/products.json';
 import initialInventoryData from './data/Inventory.json';
 import initialInventoryDtlData from './data/inventory_dtl.json';
+import initialSalesOrderData from './data/sales_order.json';
+import initialSalesOrderDtlData from './data/sales_order_dtl.json';
 import './App.css';
 
 function App() {
@@ -18,6 +22,8 @@ function App() {
   const [products, setProducts] = useState([]);
   const [inventory, setInventory] = useState([]);
   const [inventoryDtl, setInventoryDtl] = useState([]);
+  const [salesOrders, setSalesOrders] = useState([]);
+  const [salesOrderDtls, setSalesOrderDtls] = useState([]);
 
   useEffect(() => {
     const sortedClients = [...clientData].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
@@ -29,6 +35,10 @@ function App() {
     const sortedInventory = [...initialInventoryData].sort((a, b) => new Date(b.inventory_date) - new Date(a.inventory_date));
     setInventory(sortedInventory);
     setInventoryDtl(initialInventoryDtlData);
+
+    const sortedSalesOrders = [...initialSalesOrderData].sort((a, b) => new Date(b.sales_order_date) - new Date(a.sales_order_date));
+    setSalesOrders(sortedSalesOrders);
+    setSalesOrderDtls(initialSalesOrderDtlData);
   }, []);
 
   const handleSaveClient = (clientToSave, originalClientCode = null) => {
@@ -127,6 +137,43 @@ function App() {
     setInventoryDtl(inventoryDtl.filter(d => d.inventory_code !== inventoryCode));
   };
 
+  const handleSaveSalesOrder = (transaction, details, originalSalesOrderCode = null) => {
+    const now = new Date().toISOString();
+
+    if (originalSalesOrderCode) {
+      // Editing
+      const updatedSalesOrders = salesOrders.map(so =>
+        so.sales_order_code === originalSalesOrderCode ? { ...so, ...transaction, updated_at: now } : so
+      );
+      setSalesOrders(updatedSalesOrders);
+
+      const otherDetails = salesOrderDtls.filter(d => d.sales_order_code !== originalSalesOrderCode);
+      const updatedDetails = details.map(d => ({ ...d, sales_order_code: originalSalesOrderCode, created_at: d.created_at || now, updated_at: now }));
+      setSalesOrderDtls([...otherDetails, ...updatedDetails]);
+
+    } else {
+      // Adding
+      if (salesOrders.some(i => i.sales_order_code === transaction.sales_order_code)) {
+        alert('Sales order code already exists.');
+        return;
+      }
+      const newTransaction = {
+        ...transaction,
+        created_at: now,
+        updated_at: now,
+      };
+      setSalesOrders([newTransaction, ...salesOrders]);
+
+      const newDetails = details.map(d => ({ ...d, sales_order_code: transaction.sales_order_code, created_at: now, updated_at: now }));
+      setSalesOrderDtls([...salesOrderDtls, ...newDetails]);
+    }
+  };
+
+  const handleDeleteSalesOrder = (salesOrderCode) => {
+    setSalesOrders(salesOrders.filter(i => i.sales_order_code !== salesOrderCode));
+    setSalesOrderDtls(salesOrderDtls.filter(d => d.sales_order_code !== salesOrderCode));
+  };
+
   return (
     <div className="App">
       <Routes>
@@ -140,6 +187,9 @@ function App() {
         <Route path="/inventory" element={<InventoryList inventory={inventory} onDelete={handleDeleteInventory} />} />
         <Route path="/inventory-form" element={<InventoryForm onSave={handleSaveInventory} inventory={inventory} inventoryDtl={inventoryDtl} />} />
         <Route path="/inventory-form/:inventoryCode" element={<InventoryForm onSave={handleSaveInventory} inventory={inventory} inventoryDtl={inventoryDtl} />} />
+        <Route path="/sales-order" element={<SalesOrderList salesOrders={salesOrders} onDelete={handleDeleteSalesOrder} />} />
+        <Route path="/sales-order-form" element={<SalesOrderForm onSave={handleSaveSalesOrder} salesOrders={salesOrders} salesOrderDtls={salesOrderDtls} />} />
+        <Route path="/sales-order-form/:salesOrderCode" element={<SalesOrderForm onSave={handleSaveSalesOrder} salesOrders={salesOrders} salesOrderDtls={salesOrderDtls} />} />
       </Routes>
     </div>
   );

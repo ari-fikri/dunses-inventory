@@ -1,0 +1,32 @@
+[
+  {
+    "sales_order_code": "SO-2024-00001",
+    "product_code": "FG001",
+    "qty": 10.50,
+    "sale_price": 50000.00,
+    "sale_discount": 5000.00,
+    "sale_tax": 500.00,
+    "sale_currency": "IDR",
+    "remark": "First item"
+  },
+  {
+    "sales_order_code": "SO-2024--00001",
+    "product_code": "FG002",
+    "qty": 5.00,
+    "sale_price": 120000.00,
+    "sale_discount": 0.00,
+    "sale_tax": 1200.00,
+    "sale_currency": "IDR",
+    "remark": "Second item"
+  },
+  {
+    "sales_order_code": "SO-2024-00002",
+    "product_code": "RM001",
+    "qty": 100.00,
+    "sale_price": 2.50,
+    "sale_discount": 0.00,
+    "sale_tax": 0.00,
+    "sale_currency": "USD",
+    "remark": ""
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "sales_order_code": "SO-2024-00001",
+    "sales_order_date": "2024-07-26",
+    "sales_order_client": "C001",
+    "reference_code": "PO-XYZ-001",
+    "description": "Sales order for client C001"
+  },
+  {
+    "sales_order_code": "SO-2024-00002",
+    "sales_order_date": "2024-07-27",
+    "sales_order_client": "C002",
+    "reference_code": "PO-ABC-002",
+    "description": "Sales order for client C002"
+  }
+]

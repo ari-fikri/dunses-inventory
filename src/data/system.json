@@ -68,5 +68,19 @@
     "code": "PROD",
     "value_en": "Produce",
     "value_id": ""
+  },
+  {
+    "function": "sales_order",
+    "sub_function": "sale_currency",
+    "code": "IDR",
+    "value_en": "Rupiah",
+    "value_id": ""
+  },
+  {
+    "function": "sales_order",
+    "sub_function": "sale_currency",
+    "code": "USD",
+    "value_en": "US Dollar",
+    "value_id": ""
   }
 ]
