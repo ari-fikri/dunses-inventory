@@ -59,6 +59,14 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
     const { name, value } = e.target;
     const updatedDetails = [...details];
     updatedDetails[index] = { ...updatedDetails[index], [name]: value };
+
+    if (name === 'product_code') {
+      const product = products.find((p) => p.product_code === value);
+      if (product) {
+        updatedDetails[index].price = product.product_price;
+      }
+    }
+
     setDetails(updatedDetails);
   };
 
@@ -86,6 +94,15 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
     onSave(transaction, details, isEditing ? salesOrderCode : null);
     navigate('/sales-order');
   };
+
+  const totalNetSubtotal = details.reduce((total, detail) => {
+    const qty = parseFloat(detail.qty) || 0;
+    const price = parseFloat(detail.price) || 0;
+    const grossSubtotal = qty * price;
+    const discount = parseFloat(detail.sale_discount) || 0;
+    const tax = parseFloat(detail.sale_tax) || 0;
+    return total + (grossSubtotal - discount + tax);
+  }, 0);
 
   return (
     <div className="form-container">
@@ -140,19 +157,13 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
             />
           </div>
           <div className="form-group">
-            <label>Currency</label>
-            <select
-              name="sales_currency"
-              value={transaction.sales_currency}
-              onChange={handleHeaderChange}
-              required
-            >
-              {currencies.map((currency) => (
-                <option key={currency.code} value={currency.code}>
-                  {currency.value_en}
-                </option>
-              ))}
-            </select>
+            <label>TOTAL</label>
+            <input
+              type="number"
+              value={totalNetSubtotal.toFixed(2)}
+              readOnly
+              tabIndex="-1"
+            />
           </div>
           <div className="form-group">
             <label>Description</label>
@@ -164,7 +175,7 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
           </div>
         </div>
 
-        <div className="form-section">
+        <div className="details-section">
           <h3>Details</h3>
           <table className="details-table">
             <thead>
@@ -188,6 +199,7 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
                 const discount = parseFloat(detail.sale_discount) || 0;
                 const tax = parseFloat(detail.sale_tax) || 0;
                 const netSubtotal = grossSubtotal - discount + tax;
+                const isProductSelected = !!detail.product_code;
 
                 return (
                 <tr key={index}>
@@ -214,6 +226,7 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
                       onChange={(e) => handleDetailChange(index, e)}
                       min="1"
                       required
+                      disabled={!isProductSelected}
                     />
                   </td>
                   <td>
@@ -224,6 +237,7 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
                       onChange={(e) => handleDetailChange(index, e)}
                       min="0"
                       required
+                      disabled={!isProductSelected}
                     />
                   </td>
                   <td>
@@ -241,6 +255,7 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
                       name="sale_discount"
                       value={detail.sale_discount}
                       onChange={(e) => handleDetailChange(index, e)}
+                      disabled={!isProductSelected}
                     />
                   </td>
                   <td>
@@ -249,6 +264,7 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
                       name="sale_tax"
                       value={detail.sale_tax}
                       onChange={(e) => handleDetailChange(index, e)}
+                      disabled={!isProductSelected}
                     />
                   </td>
                   <td>
