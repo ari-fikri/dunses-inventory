@@ -58,15 +58,31 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
   const handleDetailChange = (index, e) => {
     const { name, value } = e.target;
     const updatedDetails = [...details];
-    updatedDetails[index] = { ...updatedDetails[index], [name]: value };
+    const newDetail = { ...updatedDetails[index], [name]: value };
 
     if (name === 'product_code') {
       const product = products.find((p) => p.product_code === value);
       if (product) {
-        updatedDetails[index].price = product.product_price;
+        newDetail.price = product.product_price;
       }
     }
 
+    if (name !== 'sale_tax') {
+      const qty = parseFloat(newDetail.qty) || 0;
+      const price = parseFloat(newDetail.price) || 0;
+      const discount = parseFloat(newDetail.sale_discount) || 0;
+      const grossSubtotal = qty * price;
+      const taxBase = grossSubtotal - discount;
+      
+      if (taxBase > 0) {
+        const tax = taxBase * 0.11;
+        newDetail.sale_tax = tax.toFixed(2);
+      } else {
+        newDetail.sale_tax = '0.00';
+      }
+    }
+
+    updatedDetails[index] = newDetail;
     setDetails(updatedDetails);
   };
 
