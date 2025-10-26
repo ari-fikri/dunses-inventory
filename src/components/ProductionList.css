@@ -1,1 +1,6 @@
 @import '../main.css';
+
+.data-table th[onclick] {
+    cursor: pointer;
+    user-select: none;
+}

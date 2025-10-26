@@ -1,22 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import './ProductionList.css';
 
 const ProductionList = ({ production, onDelete }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const [sortConfig, setSortConfig] = useState({ key: 'production_date', direction: 'descending' });
+  const productionPerPage = 10;
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = production.slice(indexOfFirstItem, indexOfLastItem);
+  const sortedProduction = useMemo(() => {
+    let sortableProduction = [...production];
+    if (sortConfig !== null) {
+      sortableProduction.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableProduction;
+  }, [production, sortConfig]);
 
-  const totalPages = Math.ceil(production.length / itemsPerPage);
+  // Pagination logic
+  const indexOfLastProduction = currentPage * productionPerPage;
+  const indexOfFirstProduction = indexOfLastProduction - productionPerPage;
+  const currentProduction = sortedProduction.slice(indexOfFirstProduction, indexOfLastProduction);
+
+  const totalPages = Math.ceil(production.length / productionPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
+  const requestSort = (key) => {
+    let direction = 'ascending';
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const getSortDirection = (name) => {
+    if (!sortConfig) {
+      return;
+    }
+    return sortConfig.key === name ? sortConfig.direction : undefined;
+  };
+
   const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
     if (!dateString) return '';
     const date = new Date(dateString);
     if (isNaN(date)) return 'Invalid Date';
@@ -25,6 +59,17 @@ const ProductionList = ({ production, onDelete }) => {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
+  };
+
+  const SortableHeader = ({ name, label }) => {
+    const direction = getSortDirection(name);
+    return (
+      <th onClick={() => requestSort(name)}>
+        {direction === 'ascending' && '▲ '}
+        {direction === 'descending' && '▼ '}
+        {label}
+      </th>
+    );
   };
 
   return (
@@ -39,31 +84,29 @@ const ProductionList = ({ production, onDelete }) => {
       <table className="data-table">
         <thead>
           <tr>
-            <th>Rec No</th>
-            <th>Production Code</th>
-            <th>Production Date</th>
-            <th>Product Code</th>
-            <th>Sales Order Code</th>
-            <th>Target Qty</th>
-            <th>Description</th>
+            <th>No.</th>
+            <SortableHeader name="production_code" label="Production Code" />
+            <SortableHeader name="production_date" label="Date" />
+            <SortableHeader name="product_code" label="Product Code" />
+            <SortableHeader name="sales_order_code" label="SO Code" />
+            <SortableHeader name="production_target_qty" label="Target (kg)" />
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {currentItems.map((item, index) => (
-            <tr key={item.production_code}>
-              <td>{indexOfFirstItem + index + 1}</td>
-              <td>{item.production_code}</td>
-              <td>{formatDate(item.production_date)}</td>
-              <td>{item.product_code}</td>
-              <td>{item.sales_order_code}</td>
-              <td>{item.production_target_qty}</td>
-              <td>{item.description}</td>
+          {currentProduction.map((prod, index) => (
+            <tr key={prod.production_code}>
+              <td>{indexOfFirstProduction + index + 1}</td>
+              <td>{prod.production_code}</td>
+              <td>{formatDate(prod.production_date)}</td>
+              <td>{prod.product_code}</td>
+              <td>{prod.sales_order_code}</td>
+              <td>{prod.production_target_qty}</td>
               <td>
-                <Link to={`/production-form/${item.production_code}`} className="action-button">
+                <Link to={`/production-form/${prod.production_code}`} className="action-button">
                   Edit
                 </Link>
-                <button onClick={() => onDelete(item.production_code)} className="action-button delete-button">
+                <button onClick={() => onDelete(prod.production_code)} className="action-button delete-button">
                   Delete
                 </button>
               </td>

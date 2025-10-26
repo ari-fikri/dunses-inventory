@@ -1,20 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import './ClientList.css';
 
 const ClientList = ({ clients, onDelete }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortConfig, setSortConfig] = useState({ key: 'created_at', direction: 'descending' });
   const clientsPerPage = 10;
+
+  const sortedClients = useMemo(() => {
+    let sortableClients = [...clients];
+    if (sortConfig !== null) {
+      sortableClients.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableClients;
+  }, [clients, sortConfig]);
 
   // Pagination logic
   const indexOfLastClient = currentPage * clientsPerPage;
   const indexOfFirstClient = indexOfLastClient - clientsPerPage;
-  const currentClients = clients.slice(indexOfFirstClient, indexOfLastClient);
+  const currentClients = sortedClients.slice(indexOfFirstClient, indexOfLastClient);
 
   const totalPages = Math.ceil(clients.length / clientsPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const requestSort = (key) => {
+    let direction = 'ascending';
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const getSortDirection = (name) => {
+    if (!sortConfig) {
+      return;
+    }
+    return sortConfig.key === name ? sortConfig.direction : undefined;
   };
 
   const formatDate = (dateString) => {
@@ -38,6 +70,17 @@ const ClientList = ({ clients, onDelete }) => {
     }
   };
 
+  const SortableHeader = ({ name, label }) => {
+    const direction = getSortDirection(name);
+    return (
+      <th onClick={() => requestSort(name)}>
+        {direction === 'ascending' && '▲ '}
+        {direction === 'descending' && '▼ '}
+        {label}
+      </th>
+    );
+  };
+
   return (
     <div className="list-container">
       <h2>Client List</h2>
@@ -51,14 +94,14 @@ const ClientList = ({ clients, onDelete }) => {
         <thead>
           <tr>
             <th>Rec No</th>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Office Phone</th>
-            <th>PIC</th>
-            <th>Mobile Phone</th>
-            <th>Created At</th>
-            <th>Updated At</th>
+            <SortableHeader name="client_code" label="Code" />
+            <SortableHeader name="client_name" label="Name" />
+            <SortableHeader name="client_address" label="Address" />
+            <SortableHeader name="client_office_phone" label="Office Phone" />
+            <SortableHeader name="client_pic_name" label="PIC" />
+            <SortableHeader name="client_mobile_phone" label="Mobile Phone" />
+            <SortableHeader name="created_at" label="Created At" />
+            <SortableHeader name="updated_at" label="Updated At" />
             <th>Actions</th>
           </tr>
         </thead>

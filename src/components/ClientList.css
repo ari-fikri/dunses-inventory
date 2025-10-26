@@ -1,3 +1,7 @@
 @import '../main.css';
 
 /* Specific styles for ClientList can go here */
+.data-table th[onclick] {
+    cursor: pointer;
+    user-select: none;
+}

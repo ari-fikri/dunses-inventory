@@ -1,22 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import './SalesOrderList.css';
 
 const SalesOrderList = ({ salesOrders, onDelete }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const [sortConfig, setSortConfig] = useState({ key: 'sales_order_date', direction: 'descending' });
+  const ordersPerPage = 10;
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = salesOrders.slice(indexOfFirstItem, indexOfLastItem);
+  const sortedSalesOrders = useMemo(() => {
+    let sortableSalesOrders = [...salesOrders];
+    if (sortConfig !== null) {
+      sortableSalesOrders.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableSalesOrders;
+  }, [salesOrders, sortConfig]);
 
-  const totalPages = Math.ceil(salesOrders.length / itemsPerPage);
+  // Pagination logic
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = sortedSalesOrders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+  const totalPages = Math.ceil(salesOrders.length / ordersPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
+  const requestSort = (key) => {
+    let direction = 'ascending';
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const getSortDirection = (name) => {
+    if (!sortConfig) {
+      return;
+    }
+    return sortConfig.key === name ? sortConfig.direction : undefined;
+  };
+
   const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
     if (!dateString) return '';
     const date = new Date(dateString);
     if (isNaN(date)) return 'Invalid Date';
@@ -25,6 +59,17 @@ const SalesOrderList = ({ salesOrders, onDelete }) => {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
+  };
+
+  const SortableHeader = ({ name, label }) => {
+    const direction = getSortDirection(name);
+    return (
+      <th onClick={() => requestSort(name)}>
+        {direction === 'ascending' && '▲ '}
+        {direction === 'descending' && '▼ '}
+        {label}
+      </th>
+    );
   };
 
   return (
@@ -39,29 +84,33 @@ const SalesOrderList = ({ salesOrders, onDelete }) => {
       <table className="data-table">
         <thead>
           <tr>
-            <th>Rec No</th>
-            <th>SO Code</th>
-            <th>SO Date</th>
-            <th>Client</th>
-            <th>Reference</th>
-            <th>Description</th>
+            <th>No.</th>
+            <SortableHeader name="sales_order_code" label="SO Code" />
+            <SortableHeader name="sales_order_date" label="Date" />
+            <SortableHeader name="client_code" label="Client Code" />
+            <th>Total Amount (Rp)</th>
+            <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {currentItems.map((item, index) => (
-            <tr key={item.sales_order_code}>
-              <td>{indexOfFirstItem + index + 1}</td>
-              <td>{item.sales_order_code}</td>
-              <td>{formatDate(item.sales_order_date)}</td>
-              <td>{item.sales_order_client}</td>
-              <td>{item.reference_code}</td>
-              <td>{item.description}</td>
+          {currentOrders.map((order, index) => (
+            <tr key={order.sales_order_code}>
+              <td>{indexOfFirstOrder + index + 1}</td>
+              <td>{order.sales_order_code}</td>
+              <td>{formatDate(order.sales_order_date)}</td>
+              <td>{order.client_code}</td>
               <td>
-                <Link to={`/sales-order-form/${item.sales_order_code}`} className="action-button">
+                {(order.sales_order_details || []).reduce((total, detail) => total + detail.total_price, 0).toLocaleString('id-ID')}
+              </td>
+              <td>
+                <span className={`status ${(order.status || '').toLowerCase()}`}>{order.status || 'N/A'}</span>
+              </td>
+              <td>
+                <Link to={`/sales-order-form/${order.sales_order_code}`} className="action-button">
                   Edit
                 </Link>
-                <button onClick={() => onDelete(item.sales_order_code)} className="action-button delete-button">
+                <button onClick={() => onDelete(order.sales_order_code)} className="action-button delete-button">
                   Delete
                 </button>
               </td>
