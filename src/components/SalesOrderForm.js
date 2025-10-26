@@ -53,14 +53,6 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
   const handleHeaderChange = (e) => {
     const { name, value } = e.target;
     setTransaction({ ...transaction, [name]: value });
-
-    if (name === 'sales_currency') {
-      const updatedDetails = details.map(detail => ({
-        ...detail,
-        sale_currency: value
-      }));
-      setDetails(updatedDetails);
-    }
   };
 
   const handleDetailChange = (index, e) => {
@@ -71,14 +63,17 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
   };
 
   const handleAddDetail = () => {
-    setDetails([...details, {
-      product_code: '',
-      qty: 1,
-      price: 0,
-      sale_discount: 0,
-      sale_tax: 0,
-      sale_currency: transaction.sales_currency
-    }]);
+    setDetails([
+      ...details,
+      {
+        product_code: '',
+        qty: 1,
+        price: 0,
+        sale_discount: 0,
+        sale_tax: 0,
+        sale_currency: transaction.sales_currency,
+      },
+    ]);
   };
 
   const handleRemoveDetail = (index) => {
@@ -177,14 +172,24 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
                 <th>Product</th>
                 <th>Quantity</th>
                 <th>Price</th>
-                <th>Discount</th>
-                <th>Tax</th>
+                <th>Gross Subtotal</th>
+                <th>- Discount</th>
+                <th>+ Tax (11%)</th>
+                <th>Net Subtotal</th>
                 <th>Currency</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {details.map((detail, index) => (
+              {details.map((detail, index) => {
+                const qty = parseFloat(detail.qty) || 0;
+                const price = parseFloat(detail.price) || 0;
+                const grossSubtotal = qty * price;
+                const discount = parseFloat(detail.sale_discount) || 0;
+                const tax = parseFloat(detail.sale_tax) || 0;
+                const netSubtotal = grossSubtotal - discount + tax;
+
+                return (
                 <tr key={index}>
                   <td>
                     <select
@@ -193,10 +198,10 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
                       onChange={(e) => handleDetailChange(index, e)}
                       required
                     >
-                      <option value="">Select a product</option>
-                      {products.map((p) => (
-                        <option key={p.product_code} value={p.product_code}>
-                          {p.product_name}
+                      <option value="">Select Product</option>
+                      {products.map((product) => (
+                        <option key={product.product_code} value={product.product_code}>
+                          {product.product_name}
                         </option>
                       ))}
                     </select>
@@ -224,10 +229,18 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
                   <td>
                     <input
                       type="number"
+                      name="gross_subtotal"
+                      value={grossSubtotal.toFixed(2)}
+                      readOnly
+                      tabIndex="-1"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
                       name="sale_discount"
                       value={detail.sale_discount}
                       onChange={(e) => handleDetailChange(index, e)}
-                      min="0"
                     />
                   </td>
                   <td>
@@ -236,7 +249,15 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
                       name="sale_tax"
                       value={detail.sale_tax}
                       onChange={(e) => handleDetailChange(index, e)}
-                      min="0"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      name="net_subtotal"
+                      value={netSubtotal.toFixed(2)}
+                      readOnly
+                      tabIndex="-1"
                     />
                   </td>
                   <td>
@@ -254,7 +275,8 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
                     </button>
                   </td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           </table>
           <button type="button" onClick={handleAddDetail} className="add-detail-button">
