@@ -1,21 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import './ProductList.css';
 
 const ProductList = ({ products, onDelete }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortConfig, setSortConfig] = useState({ key: 'created_at', direction: 'descending' });
   const productsPerPage = 10;
+
+  const sortedProducts = useMemo(() => {
+    let sortableProducts = [...products];
+    if (sortConfig !== null) {
+      sortableProducts.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableProducts;
+  }, [products, sortConfig]);
+
 
   // Pagination logic
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
   const totalPages = Math.ceil(products.length / productsPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+  const requestSort = (key) => {
+    let direction = 'ascending';
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const getSortDirection = (name) => {
+    if (!sortConfig) {
+      return;
+    }
+    return sortConfig.key === name ? sortConfig.direction : undefined;
+  };
+
 
   const formatDate = (dateString) => {
     if (!dateString) return '';
@@ -38,6 +72,17 @@ const ProductList = ({ products, onDelete }) => {
     }
   };
 
+  const SortableHeader = ({ name, label }) => {
+    const direction = getSortDirection(name);
+    return (
+      <th onClick={() => requestSort(name)}>
+        {direction === 'ascending' && '▲ '}
+        {direction === 'descending' && '▼ '}
+        {label}
+      </th>
+    );
+  };
+
   return (
     <div className="list-container">
       <h2>Product List</h2>
@@ -51,13 +96,13 @@ const ProductList = ({ products, onDelete }) => {
         <thead>
           <tr>
             <th>No.</th>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Price (Rp)</th>
-            <th>Stock (kg)</th>
-            <th>Created At</th>
-            <th>Updated At</th>
+            <SortableHeader name="product_code" label="Code" />
+            <SortableHeader name="product_name" label="Name" />
+            <SortableHeader name="product_category" label="Category" />
+            <SortableHeader name="product_price" label="Price (Rp)" />
+            <SortableHeader name="current_stock" label="Stock (kg)" />
+            <SortableHeader name="created_at" label="Created At" />
+            <SortableHeader name="updated_at" label="Updated At" />
             <th>Actions</th>
           </tr>
         </thead>

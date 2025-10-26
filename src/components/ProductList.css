@@ -1,3 +1,7 @@
 @import '../main.css';
 
 /* Specific styles for ProductList can go here */
+.data-table th[onclick] {
+  cursor: pointer;
+  user-select: none;
+}
