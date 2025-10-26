@@ -107,6 +107,17 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!isEditing) {
+      const soCodeExists = salesOrders.some(
+        (so) => so.sales_order_code === transaction.sales_order_code
+      );
+      if (soCodeExists) {
+        alert('Sales Order Code already exists. Please use a different code.');
+        return; 
+      }
+    }
+
     onSave(transaction, details, isEditing ? salesOrderCode : null);
     navigate('/sales-order');
   };
