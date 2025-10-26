@@ -20,6 +20,7 @@ const ProductionForm = ({ onSave, production, salesOrders }) => {
 
   const [products, setProducts] = useState([]);
   const [allSalesOrders, setAllSalesOrders] = useState([]);
+  const [selectedProductMaterials, setSelectedProductMaterials] = useState([]);
 
   useEffect(() => {
     setProducts(productData);
@@ -36,13 +37,35 @@ const ProductionForm = ({ onSave, production, salesOrders }) => {
             ? new Date(existingTransaction.production_date).toISOString().split('T')[0]
             : '',
         });
+        if (existingTransaction.product_code) {
+          const product = productData.find(p => p.product_code === existingTransaction.product_code);
+          if (product && product.materials) {
+            setSelectedProductMaterials(product.materials);
+          }
+        }
       }
     }
   }, [isEditing, productionCode, production]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setTransaction({ ...transaction, [name]: value });
+    const newTransaction = { ...transaction, [name]: value };
+
+    if (name === 'product_code') {
+      const product = productData.find((p) => p.product_code === value);
+      if (product) {
+        newTransaction.production_target_qty = 1;
+        if (product.materials) {
+          setSelectedProductMaterials(product.materials);
+        } else {
+          setSelectedProductMaterials([]);
+        }
+      } else {
+        newTransaction.production_target_qty = 0;
+        setSelectedProductMaterials([]);
+      }
+    }
+    setTransaction(newTransaction);
   };
 
   const handleSubmit = (e) => {
@@ -138,6 +161,35 @@ const ProductionForm = ({ onSave, production, salesOrders }) => {
             />
           </div>
         </div>
+
+        {selectedProductMaterials.length > 0 && (
+          <div className="form-section">
+            <h3>Material Requirement</h3>
+            <table className="materials-table">
+              <thead>
+                <tr>
+                  <th>Material</th>
+                  <th>Required Quantity</th>
+                  <th>Available Stock</th>
+                </tr>
+              </thead>
+              <tbody>
+                {selectedProductMaterials.map((material) => {
+                  const materialProduct = products.find(
+                    (p) => p.product_code === material.material_code
+                  );
+                  return (
+                    <tr key={material.material_code}>
+                      <td>{materialProduct ? materialProduct.product_name : material.material_code}</td>
+                      <td>{material.material_qty * transaction.production_target_qty}</td>
+                      <td>{materialProduct ? materialProduct.current_stock : 'N/A'}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         <div className="form-actions">
           <button type="submit" className="submit-button">Save</button>
