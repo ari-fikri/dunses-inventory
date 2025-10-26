@@ -22,6 +22,11 @@ const HomeScreen = () => {
             <p className="card-description">Manage production orders and material consumption.</p>
             <Link to="/production" className="card-link">Go to Production</Link>
           </div>
+          <div className="card glass-surface">
+            <h3>Sales Order</h3>
+            <p className="card-description">Manage customer sales orders and track fulfillment.</p>
+            <Link to="/sales-order" className="card-link">Go to Sales Order</Link>
+          </div>
         </div>
       </div>
       <div className="section">
