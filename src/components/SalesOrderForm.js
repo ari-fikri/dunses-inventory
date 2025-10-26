@@ -21,15 +21,10 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
   const [details, setDetails] = useState([]);
   const [clients, setClients] = useState([]);
   const [products, setProducts] = useState([]);
-  const [currencies, setCurrencies] = useState([]);
 
   useEffect(() => {
     setClients(clientData);
     setProducts(productData);
-    const currencyData = systemData.filter(
-      (item) => item.function === 'sales_order' && item.sub_function === 'sale_currency'
-    );
-    setCurrencies(currencyData);
 
     if (isEditing) {
       const existingTransaction = salesOrders.find(
@@ -48,7 +43,7 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
       );
       setDetails(existingDetails);
     }
-  }, [salesOrderCode, salesOrders, salesOrderDtls]);
+  }, [isEditing, salesOrderCode, salesOrders, salesOrderDtls]);
 
   const handleHeaderChange = (e) => {
     const { name, value } = e.target;
@@ -177,7 +172,7 @@ const SalesOrderForm = ({ onSave, salesOrders, salesOrderDtls }) => {
           <div className="form-group">
             <label>Reference Code</label>
             <input
-              type="text"
+ er              type="text"
               name="reference_code"
               value={transaction.reference_code}
               onChange={handleHeaderChange}
