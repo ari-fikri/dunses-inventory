@@ -224,7 +224,15 @@ function App() {
 
     handleSaveInventory(inventoryTransaction, inventoryDetails);
 
-    const updatedProducts = [...products];
+    setProducts(currentProducts =>
+      currentProducts.map(p => {
+        const materialDetail = inventoryDetails.find(d => d.product_code === p.product_code);
+        if (materialDetail) {
+          return { ...p, current_stock: p.current_stock - materialDetail.qty };
+        }
+        return p;
+      })
+    );
   };
 
   const handleDeleteProduction = (productionCode) => {
