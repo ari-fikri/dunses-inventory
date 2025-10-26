@@ -70,17 +70,20 @@ const ProductionForm = ({ onSave, production, salesOrders }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!isEditing) {
-      const codeExists = production.some(
-        (p) => p.production_code === transaction.production_code
-      );
-      if (codeExists) {
-        alert('Production Code already exists. Please use a different code.');
-        return;
+
+    if (window.confirm("This action will trigger an Inventory Transaction, continue?")) {
+      if (!isEditing) {
+        const codeExists = production.some(
+          (p) => p.production_code === transaction.production_code
+        );
+        if (codeExists) {
+          alert('Production Code already exists. Please use a different code.');
+          return;
+        }
       }
+      onSave(transaction, selectedProductMaterials, isEditing ? productionCode : null);
+      navigate('/production');
     }
-    onSave(transaction, isEditing ? productionCode : null);
-    navigate('/production');
   };
 
   return (

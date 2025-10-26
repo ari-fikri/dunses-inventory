@@ -205,6 +205,28 @@ function App() {
     }
   };
 
+  const handleSaveProductionAndInventory = (productionTransaction, materials, originalProductionCode = null) => {
+    handleSaveProduction(productionTransaction, originalProductionCode);
+
+    const inventoryTransaction = {
+      inventory_code: `IV-PROD-${productionTransaction.production_code}`,
+      inventory_date: new Date().toISOString().split('T')[0],
+      reference_code: productionTransaction.production_code,
+      inventory_type: 'OUT',
+      description: `Materials for production ${productionTransaction.production_code}`,
+    };
+
+    const inventoryDetails = materials.map(material => ({
+      product_code: material.material_code,
+      qty: material.material_qty * productionTransaction.production_target_qty,
+      price: 0,
+    }));
+
+    handleSaveInventory(inventoryTransaction, inventoryDetails);
+
+    const updatedProducts = [...products];
+  };
+
   const handleDeleteProduction = (productionCode) => {
     setProduction(production.filter(p => p.production_code !== productionCode));
   };
@@ -226,8 +248,8 @@ function App() {
         <Route path="/sales-order-form" element={<SalesOrderForm onSave={handleSaveSalesOrder} salesOrders={salesOrders} salesOrderDtls={salesOrderDtls} />} />
         <Route path="/sales-order-form/:salesOrderCode" element={<SalesOrderForm onSave={handleSaveSalesOrder} salesOrders={salesOrders} salesOrderDtls={salesOrderDtls} />} />
         <Route path="/production" element={<ProductionList production={production} onDelete={handleDeleteProduction} />} />
-        <Route path="/production-form" element={<ProductionForm onSave={handleSaveProduction} production={production} />} />
-        <Route path="/production-form/:productionCode" element={<ProductionForm onSave={handleSaveProduction} production={production} />} />
+        <Route path="/production-form" element={<ProductionForm onSave={handleSaveProductionAndInventory} production={production} />} />
+        <Route path="/production-form/:productionCode" element={<ProductionForm onSave={handleSaveProductionAndInventory} production={production} />} />
       </Routes>
     </div>
   );
