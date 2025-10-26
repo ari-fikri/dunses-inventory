@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import systemData from '../data/system.json';
 import productData from '../data/products.json';
 import clientData from '../data/clients.json';
 import './SalesOrderForm.css';
