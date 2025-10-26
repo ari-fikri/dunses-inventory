@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import './InventoryList.css';
-import systemData from '../data/system.json';
 
 const InventoryList = ({ inventory, onDelete }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,7 +50,6 @@ const InventoryList = ({ inventory, onDelete }) => {
   };
 
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
     if (!dateString) return '';
     const date = new Date(dateString);
     if (isNaN(date)) return 'Invalid Date';
