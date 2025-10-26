@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import HomeScreen from './components/HomeScreen';
 import ClientList from './components/ClientList';
 import ClientForm from './components/ClientForm';
