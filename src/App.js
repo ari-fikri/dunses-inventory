@@ -9,12 +9,15 @@ import InventoryList from './components/InventoryList';
 import InventoryForm from './components/InventoryForm';
 import SalesOrderList from './components/SalesOrderList';
 import SalesOrderForm from './components/SalesOrderForm';
+import ProductionList from './components/ProductionList';
+import ProductionForm from './components/ProductionForm';
 import clientData from './data/clients.json';
 import productData from './data/products.json';
 import initialInventoryData from './data/Inventory.json';
 import initialInventoryDtlData from './data/inventory_dtl.json';
 import initialSalesOrderData from './data/sales_order.json';
 import initialSalesOrderDtlData from './data/sales_order_dtl.json';
+import initialProductionData from './data/production.json';
 import './App.css';
 
 function App() {
@@ -24,6 +27,7 @@ function App() {
   const [inventoryDtl, setInventoryDtl] = useState([]);
   const [salesOrders, setSalesOrders] = useState([]);
   const [salesOrderDtls, setSalesOrderDtls] = useState([]);
+  const [production, setProduction] = useState([]);
 
   useEffect(() => {
     const sortedClients = [...clientData].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
@@ -39,6 +43,9 @@ function App() {
     const sortedSalesOrders = [...initialSalesOrderData].sort((a, b) => new Date(b.sales_order_date) - new Date(a.sales_order_date));
     setSalesOrders(sortedSalesOrders);
     setSalesOrderDtls(initialSalesOrderDtlData);
+
+    const sortedProduction = [...initialProductionData].sort((a, b) => new Date(b.production_date) - new Date(a.production_date));
+    setProduction(sortedProduction);
   }, []);
 
   const handleSaveClient = (clientToSave, originalClientCode = null) => {
@@ -174,6 +181,34 @@ function App() {
     setSalesOrderDtls(salesOrderDtls.filter(d => d.sales_order_code !== salesOrderCode));
   };
 
+  const handleSaveProduction = (transaction, originalProductionCode = null) => {
+    const now = new Date().toISOString();
+
+    if (originalProductionCode) {
+      // Editing
+      const updatedProduction = production.map(p =>
+        p.production_code === originalProductionCode ? { ...p, ...transaction, updated_at: now } : p
+      );
+      setProduction(updatedProduction);
+    } else {
+      // Adding
+      if (production.some(p => p.production_code === transaction.production_code)) {
+        alert('Production code already exists.');
+        return;
+      }
+      const newTransaction = {
+        ...transaction,
+        created_at: now,
+        updated_at: now,
+      };
+      setProduction([newTransaction, ...production]);
+    }
+  };
+
+  const handleDeleteProduction = (productionCode) => {
+    setProduction(production.filter(p => p.production_code !== productionCode));
+  };
+
   return (
     <div className="App">
       <Routes>
@@ -190,6 +225,9 @@ function App() {
         <Route path="/sales-order" element={<SalesOrderList salesOrders={salesOrders} onDelete={handleDeleteSalesOrder} />} />
         <Route path="/sales-order-form" element={<SalesOrderForm onSave={handleSaveSalesOrder} salesOrders={salesOrders} salesOrderDtls={salesOrderDtls} />} />
         <Route path="/sales-order-form/:salesOrderCode" element={<SalesOrderForm onSave={handleSaveSalesOrder} salesOrders={salesOrders} salesOrderDtls={salesOrderDtls} />} />
+        <Route path="/production" element={<ProductionList production={production} onDelete={handleDeleteProduction} />} />
+        <Route path="/production-form" element={<ProductionForm onSave={handleSaveProduction} production={production} />} />
+        <Route path="/production-form/:productionCode" element={<ProductionForm onSave={handleSaveProduction} production={production} />} />
       </Routes>
     </div>
   );

@@ -1,0 +1,18 @@
+[
+  {
+    "production_code": "PROD-2024-00001",
+    "production_date": "2024-07-28",
+    "production_target_qty": 100.00,
+    "product_code": "P001",
+    "sales_order_code": "SO-2024-00001",
+    "description": "Production for sales order SO-2024-00001"
+  },
+  {
+    "production_code": "PROD-2024-00002",
+    "production_date": "2024-07-29",
+    "production_target_qty": 250.50,
+    "product_code": "P002",
+    "sales_order_code": "SO-2024-00002",
+    "description": "Production for sales order SO-2024-00002"
+  }
+]
